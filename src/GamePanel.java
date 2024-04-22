@@ -1,3 +1,7 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.*;
+
 
 public class GamePanel extends AnimatedPanel{
 
@@ -32,5 +36,14 @@ public class GamePanel extends AnimatedPanel{
 		// TODO Auto-generated method stub
 		System.out.print("Game Panel");
 	}
+	
+	public void draw(Graphics g) {
+        // TODO: Not Yet Implemented
+        // consider drawing it a random color each time to illustrate some animation
+        // using AnimatedPanel::getRandColor
+        g.setColor(Color.BLACK);
+        g.drawRect(Main.WIDTH / 6, Main.HEIGHT / 6, 500, 500);
+
+    }
 
 }

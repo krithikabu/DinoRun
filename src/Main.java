@@ -105,6 +105,7 @@ class Main extends JFrame  {
 
         // we will have 4 possible panels that we may display
 		this.panels = new AnimatedPanel[1];
+		this.setSize(WIDTH, HEIGHT);
 
         // Question: How is it that we can put all these different Panels into the
         // same array?
