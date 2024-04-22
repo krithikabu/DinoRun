@@ -207,27 +207,20 @@ class Main extends JFrame  {
 	private JMenu createAnimationMenu() {
 		// The Animation menu will display the specific animation
 		// such as the ability to increase/decrease the animation speed.
-		JMenu menu = new JMenu("Animation");
+		JMenu menu = new JMenu("Dinosaur Game");
 		menu.setMnemonic('A');
 		// Q: What is the second parameter in the JMenuItem constructor?
 		// A:
-		JMenuItem item = new JMenuItem("Show Balls", 'B');
+		JMenuItem item = new JMenuItem("Easy Mode", 'E');
 		// Q: What is the 'e -> showPanel(BALL_PANEL)?
 		// Q: What is the 'e'?
 		item.addActionListener(e -> showPanel(GAME_PANEL));
 		menu.add(item);
-		item = new JMenuItem("Show Banner", 'A');
+		item = new JMenuItem("Medium Mode", 'M');
 		// item.addActionListener( ... what goes here? ...)
 		menu.add(item);
-		item = new JMenuItem("Show Sparks", 'K');
+		item = new JMenuItem("Hard Mode", 'H');
 		// item.addActionListener( ... what goes here? ...)
-		menu.add(item);
-		item = new JMenuItem("Show Fill", 'F');
-		// item.addActionListener( ... what goes here? ...)
-		menu.add(item);
-		item = new JMenuItem("Slower animation", 'S');
-		// Q: Why have the Math.min here? What does it accomplish?
-		// A:
 		item.addActionListener(e -> Main.delay = Math.min(500, Main.delay+10));
 		// Q: What is an accelerator? How does it impact the user experience/functionality?
 		// A:
