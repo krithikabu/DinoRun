@@ -1,22 +1,3 @@
-/*
- * STUDENT NAME goes here
- */
-/*
- * Lesson Objectives:
- *    - Learn a Framework through inspection and breakpoints
- *    - Lambda expressions and event handlers
- *    - Click Event via MouseListener interface & MouseAdapter class
- *      and using an inline anonymous class.
- *    - Intro to Multi-threading
- *    - Abstract class and methods (volatile keyword)
- *    - Menu system (JMenuBar, JMenu, JMenuItem, accelerator keys)
- *    - Drawing using Swing GUI API
- *    - Images, RGB, drawImage to screen Graphics
- *         BufferedImage drawing
- *    - paintComponent() override
- *    - Good use of constants
- *    - Fill Algo using Stack (iterative version of recursive algo)
- */
 
 import java.awt.event.InputEvent;
 import javax.swing.*;
