@@ -18,6 +18,7 @@ public class GameWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameScreen = new GameScreen();
 		add(gameScreen);
+		addKeyListener(gameScreen);
 	}
 	
 	public static void main(String args[]) {
@@ -30,19 +31,21 @@ public class GameWindow extends JFrame {
 		gameScreen.startGame();
 	}
 	
+	/*
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.drawString("paintint", 0, 0);
+		g.drawString("painting", 0, 0);
 		try {
 			// Image image = ImageIO.read(new File("DinoIcon.png"));
 			// g.drawImage(image, 0,0 ,null);
 			BufferedImage bufferedImage = ImageIO.read(new File("DinoIcon.png"));
 			Image image = bufferedImage.getScaledInstance(150, 100, Image.SCALE_DEFAULT);
-			g.drawImage(image, 150,150 ,null);
+			g.drawImage(image, 150, 150, null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	*/
 	
 }
