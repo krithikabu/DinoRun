@@ -18,7 +18,8 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	private float y = 0;
 	private float speedY = 0;
 	private Thread thread;
-	public static final float GRAVITY = 0.1f;
+	public static final float GRAVITY = 0.25f;
+	public static final float GROUND = 300;
 	
 	public GameScreen() {
 		thread = new Thread(this);
@@ -31,8 +32,13 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	public void run() {
 		while(true) {
 			try {
-				speedY += GRAVITY;
-				y += speedY;
+				if (y >= GROUND - 75) {
+					speedY = 0;
+					y = GROUND - 75;
+				} else {
+					speedY += GRAVITY;
+					y += speedY;
+				}
 				repaint();
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -59,6 +65,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 			
 			g.drawImage(image, (int)x, (int)y, null);
 			
+			g.drawLine(0, (int) GROUND, getWidth(), (int) GROUND);	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,15 +80,16 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Key Pressed");
+		System.out.println("im just ken");
 		speedY = -4;
+		y += speedY;
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Key Released");
+		System.out.println("anywhere else id be a ten");
 		
 	}
 

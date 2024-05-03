@@ -14,7 +14,7 @@ public class GameWindow extends JFrame {
 	
 	public GameWindow() {
 		super("Java T-Rex game");
-		setSize(1000, 1000);
+		setSize(750, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameScreen = new GameScreen();
 		add(gameScreen);
