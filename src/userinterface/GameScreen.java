@@ -12,17 +12,21 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import  javax.swing.JPanel;
 
+import objectgame.MainCharacter;
+
 public class GameScreen extends JPanel implements Runnable, KeyListener{
 	
-	private float x = 0;
-	private float y = 0;
-	private float speedY = 0;
+	
 	private Thread thread;
 	public static final float GRAVITY = 0.25f;
 	public static final float GROUND = 300;
 	
+	private MainCharacter dino;
+	
+	
 	public GameScreen() {
 		thread = new Thread(this);
+		dino = new MainCharacter();
 	}
 	
 	public void startGame() {
@@ -32,13 +36,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	public void run() {
 		while(true) {
 			try {
-				if (y >= GROUND - 75) {
-					speedY = 0;
-					y = GROUND - 75;
-				} else {
-					speedY += GRAVITY;
-					y += speedY;
-				}
+				dino.move();
 				repaint();
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -51,25 +49,11 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	@Override
 	public void paint (Graphics g) {
 		super.paintComponent(g);
-		/*
-		 * g.setColor(Color.white); 
-		 * g.fillRect(0, 0, getWidth(), getHeight());
-		 * g.setColor(Color.black); 
-		 * g.drawRect((int) x, (int) y, 100, 100);
-		 */
-		try {
-			// Image image = ImageIO.read(new File("DinoIcon.png"));
-			// g.drawImage(image, 0,0 ,null);
-			BufferedImage bufferedImage = ImageIO.read(new File("DinoIcon.png"));
-			Image image = bufferedImage.getScaledInstance(150, 100, Image.SCALE_DEFAULT);
-			
-			g.drawImage(image, (int)x, (int)y, null);
-			
-			g.drawLine(0, (int) GROUND, getWidth(), (int) GROUND);	
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// Image image = ImageIO.read(new File("DinoIcon.png"));
+		// g.drawImage(image, 0,0 ,null);
+		g.setColor(Color.red);
+		g.drawLine(0, (int) GROUND, getWidth(), (int) GROUND);	
+		dino.draw(g);
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -81,8 +65,11 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("im just ken");
-		speedY = -4;
-		y += speedY;
+		if((e.getKeyCode()== KeyEvent.VK_UP) || (e.getKeyCode()== KeyEvent.VK_SPACE))  {
+			dino.jump();
+		}
+		
+		
 		
 	}
 
