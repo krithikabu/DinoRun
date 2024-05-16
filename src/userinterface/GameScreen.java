@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import  javax.swing.JPanel;
 
 import objectgame.MainCharacter;
@@ -19,7 +20,9 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	
 	private Thread thread;
 	public static final float GRAVITY = 0.25f;
-	public static final float GROUND = 300;
+	public static final float GROUND = (float) (GameWindow.SCREEN_HEIGHT * (0.63));
+	//private ImageIcon backgroundImage;
+	BufferedImage backgroundImage;
 	
 	private MainCharacter dino;
 	
@@ -27,6 +30,13 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	public GameScreen() {
 		thread = new Thread(this);
 		dino = new MainCharacter();
+		// backgroundImage = new ImageIcon("data/background.png");
+		try {
+			backgroundImage = ImageIO.read(new File("data/background.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void startGame() {
@@ -49,11 +59,14 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	@Override
 	public void paint (Graphics g) {
 		super.paintComponent(g);
-		// Image image = ImageIO.read(new File("DinoIcon.png"));
-		// g.drawImage(image, 0,0 ,null);
-		g.setColor(Color.red);
+		
+		g.setColor(Color.MAGENTA);
+		int w = this.getWidth();
+		int h = this.getHeight();
+		g.drawImage(backgroundImage, 0,  0, w, h, 0, 0, backgroundImage.getWidth(), backgroundImage.getHeight(), this);
 		g.drawLine(0, (int) GROUND, getWidth(), (int) GROUND);	
 		dino.draw(g);
+		
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
