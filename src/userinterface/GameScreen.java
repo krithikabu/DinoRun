@@ -13,6 +13,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import  javax.swing.JPanel;
 
+import objectgame.Clouds;
+import objectgame.Land;
 import objectgame.MainCharacter;
 
 public class GameScreen extends JPanel implements Runnable, KeyListener{
@@ -20,23 +22,31 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	
 	private Thread thread;
 	public static final float GRAVITY = 0.25f;
-	public static final float GROUND = (float) (GameWindow.SCREEN_HEIGHT * (0.63));
+	public static final float GROUND = 110;
+	// public static final float GROUND = (float) (GameWindow.SCREEN_HEIGHT * (0.63));
 	//private ImageIcon backgroundImage;
 	BufferedImage backgroundImage;
 	
 	private MainCharacter dino;
+	private Land land;
+	private Clouds clouds;
 	
 	
 	public GameScreen() {
 		thread = new Thread(this);
 		dino = new MainCharacter();
-		// backgroundImage = new ImageIcon("data/background.png");
+		land = new Land(this);
+		dino.setX(50);
+		dino.setY(100);
+		clouds = new Clouds();
+		/*
 		try {
 			backgroundImage = ImageIO.read(new File("data/background.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
 	
 	public void startGame() {
@@ -47,6 +57,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 		while(true) {
 			try {
 				dino.move();
+				land.move();
 				repaint();
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -60,12 +71,14 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	public void paint (Graphics g) {
 		super.paintComponent(g);
 		
-		g.setColor(Color.MAGENTA);
+		g.setColor(Color.decode("#f7f7f7"));
 		int w = this.getWidth();
 		int h = this.getHeight();
-		g.drawImage(backgroundImage, 0,  0, w, h, 0, 0, backgroundImage.getWidth(), backgroundImage.getHeight(), this);
+		// g.drawImage(backgroundImage, 0,  0, w, h, 0, 0, backgroundImage.getWidth(), backgroundImage.getHeight(), this);
 		g.drawLine(0, (int) GROUND, getWidth(), (int) GROUND);	
+		land.draw(g);
 		dino.draw(g);
+		clouds.draw(g);
 		
 	}
 	@Override

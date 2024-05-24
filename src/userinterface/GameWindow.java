@@ -11,12 +11,13 @@ import javax.swing.JFrame;
 public class GameWindow extends JFrame {
 	
 	public static final int SCREEN_WIDTH = 600;
-	public static final int SCREEN_HEIGHT = 200;
+	public static final int SCREEN_HEIGHT = 175;
 	private GameScreen gameScreen;
 	
 	public GameWindow() {
 		super("Java T-Rex game");
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		setLocation(400,200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameScreen = new GameScreen();
 		add(gameScreen);
