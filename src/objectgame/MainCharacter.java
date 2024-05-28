@@ -85,7 +85,7 @@ public class MainCharacter {
     public void draw(Graphics g) {
         try {
             // Draw the current frame of the animation
-
+        	g.setColor(Color.PINK);
     		g.drawRect((int) x, (int) y, 39, 43);
             g.drawImage(dinoRun.getFrame(), (int)x, (int)y, null);
         } catch (Exception e) {

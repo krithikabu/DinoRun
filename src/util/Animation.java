@@ -21,6 +21,7 @@ public class Animation {
 
     // Updates the animation frame based on the time interval
     public void move() {
+    	
         if(System.currentTimeMillis() - timeInitial > timeChange) {
             frameIdx++;
             if(frameIdx >= frames.size()) {

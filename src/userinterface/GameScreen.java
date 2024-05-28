@@ -58,6 +58,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 			try {
 				dino.move();
 				land.move();
+				clouds.move();
 				repaint();
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -76,9 +77,9 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 		int h = this.getHeight();
 		// g.drawImage(backgroundImage, 0,  0, w, h, 0, 0, backgroundImage.getWidth(), backgroundImage.getHeight(), this);
 		g.drawLine(0, (int) GROUND, getWidth(), (int) GROUND);	
+		clouds.draw(g);
 		land.draw(g);
 		dino.draw(g);
-		clouds.draw(g);
 		
 	}
 	@Override
