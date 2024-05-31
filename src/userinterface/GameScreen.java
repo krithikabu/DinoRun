@@ -13,13 +13,14 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import  javax.swing.JPanel;
 
+import objectgame.Cactus;
 import objectgame.Clouds;
 import objectgame.Land;
 import objectgame.MainCharacter;
 
 public class GameScreen extends JPanel implements Runnable, KeyListener{
-	
-	
+
+
 	private Thread thread;
 	public static final float GRAVITY = 0.25f;
 	public static final float GROUND = 110;
@@ -30,6 +31,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	private MainCharacter dino;
 	private Land land;
 	private Clouds clouds;
+	private Cactus cactus;
 	
 	
 	public GameScreen() {
@@ -39,12 +41,13 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 		dino.setX(50);
 		dino.setY(100);
 		clouds = new Clouds();
+		cactus = new Cactus();
 		/*
 		try {
-			backgroundImage = ImageIO.read(new File("data/background.png"));
+		backgroundImage = ImageIO.read(new File("data/background.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 		}
 		*/
 	}
@@ -59,12 +62,13 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 				dino.move();
 				land.move();
 				clouds.move();
+				cactus.move();
 				repaint();
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+		
 		}
 	}
 	
@@ -76,18 +80,19 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 		int w = this.getWidth();
 		int h = this.getHeight();
 		// g.drawImage(backgroundImage, 0,  0, w, h, 0, 0, backgroundImage.getWidth(), backgroundImage.getHeight(), this);
-		g.drawLine(0, (int) GROUND, getWidth(), (int) GROUND);	
+		g.drawLine(0, (int) GROUND, getWidth(), (int) GROUND);
 		clouds.draw(g);
 		land.draw(g);
 		dino.draw(g);
-		
+		cactus.draw(g);
+	
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+	
 	}
-
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -95,11 +100,8 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 		if((e.getKeyCode()== KeyEvent.VK_UP) || (e.getKeyCode()== KeyEvent.VK_SPACE))  {
 			dino.jump();
 		}
-		
-		
-		
 	}
-
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
