@@ -17,13 +17,22 @@ public class Cactus {
 		image = Sprite.getSpriteImage("data/cactus1.png");
 		posX = 200;
 		posY = 65;
+		rect = new Rectangle();
 	}
 
 	public void move() {
 		posX -= 3;
+		rect.x = posX;
+		rect.y = posY;
+		rect.width = image.getWidth();
+		rect.height = image.getHeight();
 	}
 
 	public void draw (Graphics g) {
 		g.drawImage(image, posX,  posY,  null);
+	}
+	
+	public Rectangle getBounds() {
+		return rect;
 	}
 }

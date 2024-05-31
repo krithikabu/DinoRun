@@ -2,6 +2,7 @@
 package objectgame;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +19,12 @@ public class MainCharacter {
     // Position coordinates of the main character
     private float x = 0;
     private float y = 0;
+    
     // Vertical speed of the main character
     private float speedY = 0;
     // Animation for the running dino
     private Animation dinoRun;
+    private Rectangle rect;
 
     public MainCharacter() {
         // Initialize the animation with a frame change interval of 200 milliseconds
@@ -29,6 +32,7 @@ public class MainCharacter {
         // Add frames to the animation
         dinoRun.addFrame(Sprite.getSpriteImage("data/main-character1.png"));
         dinoRun.addFrame(Sprite.getSpriteImage("data/main-character2.png"));
+        rect = new Rectangle();
     }
 
     // Getter for speedY
@@ -74,6 +78,7 @@ public class MainCharacter {
             speedY += GameScreen.GRAVITY;
             y += speedY;
         }
+        
     }
 
     // Make the character jump
