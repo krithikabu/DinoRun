@@ -46,9 +46,10 @@ public class MainCharacter {
         return y;
     }
 
-    // Setter for y
+    // Setting y
     public void setY(float y) {
         this.y = y;
+        
     }
 
     // Getter for x
