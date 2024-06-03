@@ -25,6 +25,7 @@ public class MainCharacter {
     // Animation for the running dino
     private Animation dinoRun;
     private Rectangle rect;
+    private boolean isAlive = true;
 
     public MainCharacter() {
         // Initialize the animation with a frame change interval of 200 milliseconds
@@ -65,6 +66,14 @@ public class MainCharacter {
     public void setX(float x) {
         this.x = x;
     }
+    
+    public void setAlive(Boolean alive) {
+    	isAlive = alive;
+    }
+    
+    public boolean getAlive() {
+    	return isAlive;
+    }
 
     // Move the character and update its animation frame
     public void move() {
@@ -78,12 +87,19 @@ public class MainCharacter {
             speedY += GameScreen.GRAVITY;
             y += speedY;
         }
-        
+        rect.x = (int) x;
+        rect.y = (int) y;
+        rect.width = dinoRun.getFrame().getWidth();
+        rect.height = dinoRun.getFrame().getHeight();
+    }
+    
+    public Rectangle getBounds() {
+    	return rect;
     }
 
     // Make the character jump
     public void jump() {
-        speedY = -5;
+        speedY = -6;
         y += speedY;
     }
 
@@ -92,7 +108,7 @@ public class MainCharacter {
         try {
             // Draw the current frame of the animation
         	g.setColor(Color.PINK);
-    		g.drawRect((int) x, (int) y, 39, 43);
+//    		g.drawRect((int) x, (int) y, 39, 43);
             g.drawImage(dinoRun.getFrame(), (int)x, (int)y, null);
         } catch (Exception e) {
             // Print any exceptions that occur

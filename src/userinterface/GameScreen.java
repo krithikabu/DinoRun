@@ -17,6 +17,8 @@ import objectgame.Cactus;
 import objectgame.Clouds;
 import objectgame.Land;
 import objectgame.MainCharacter;
+import objectgame.ObstaclesController;
+import util.Sprite;
 
 public class GameScreen extends JPanel implements Runnable, KeyListener{
 
@@ -31,7 +33,16 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	private MainCharacter dino;
 	private Land land;
 	private Clouds clouds;
-	private Cactus cactus;
+//	private Cactus cactus;
+	private ObstaclesController oc;
+	private int score;
+	
+	private int gameMode = GAME_START_MODE;
+	public static final int GAME_START_MODE = 0;
+	public static final int GAME_PLAY_MODE = 1;
+	public static final int GAME_END_MODE = 2;
+	
+	private BufferedImage dead;
 	
 	
 	public GameScreen() {
@@ -39,9 +50,12 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 		dino = new MainCharacter();
 		land = new Land(this);
 		dino.setX(50);
-		dino.setY(100);
+		dino.setY(62);
 		clouds = new Clouds();
-		cactus = new Cactus();
+//		cactus = new Cactus();
+		oc = new ObstaclesController(dino, this);
+		dead = Sprite.getSpriteImage("data/gameover_text.png");
+		
 		/*
 		try {
 		backgroundImage = ImageIO.read(new File("data/background.png"));
@@ -59,10 +73,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	public void run() {
 		while(true) {
 			try {
-				dino.move();
-				land.move();
-				clouds.move();
-				cactus.move();
+				move();
 				repaint();
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -72,21 +83,74 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 		}
 	}
 	
+	public void move() {
+		switch(gameMode) {
+		case GAME_PLAY_MODE:
+			dino.move();
+			land.move();
+			clouds.move();
+			oc.move();
+			if (!dino.getAlive()) {
+				gameMode = GAME_END_MODE;
+			}
+			break;
+		}
+		
+//		cactus.move();
+//		if (cactus.getBounds().intersects(dino.getBounds())) {
+//			System.out.println("collision");
+//		}
+		
+	}
+	
+	public void increaseScore(int score) {
+		this.score += score;
+	}
+	
 	@Override
 	public void paint (Graphics g) {
 		super.paintComponent(g);
+		this.setBackground(Color.decode("#f7f7f7"));
+//		g.setColor(Color.decode("#f7f7f7"));
+//		int w = this.getWidth();
+//		int h = this.getHeight();
+//		g.drawImage(backgroundImage, 0,  0, w, h, 0, 0, backgroundImage.getWidth(), backgroundImage.getHeight(), this);
+//		g.drawLine(0, (int) GROUND, getWidth(), (int) GROUND);
 		
-		g.setColor(Color.decode("#f7f7f7"));
-		int w = this.getWidth();
-		int h = this.getHeight();
-		// g.drawImage(backgroundImage, 0,  0, w, h, 0, 0, backgroundImage.getWidth(), backgroundImage.getHeight(), this);
-		g.drawLine(0, (int) GROUND, getWidth(), (int) GROUND);
-		clouds.draw(g);
-		land.draw(g);
-		dino.draw(g);
-		cactus.draw(g);
-	
+		switch(gameMode) {
+			case GAME_START_MODE:
+				dino.draw(g);
+				break;
+			case GAME_PLAY_MODE:
+				clouds.draw(g);
+				land.draw(g);
+				dino.draw(g);
+				oc.draw(g);
+				g.drawString("HI " + String.valueOf(score), 500, 20);
+				break;
+			case GAME_END_MODE:
+				clouds.draw(g);
+				land.draw(g);
+				dino.draw(g);
+				oc.draw(g);
+				g.drawImage(dead,  100,  50,  null);
+				break;
+		}
+//		clouds.draw(g);
+//		land.draw(g);
+//		dino.draw(g);
+//		cactus.draw(g);
+//		oc.draw(g);
+
 	}
+	
+	private void resetGame() {
+		dino.setAlive(true);
+		dino.setX(50);
+		dino.setY(62);
+		oc.resetGame();
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -97,16 +161,27 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("im just ken");
-		if((e.getKeyCode()== KeyEvent.VK_UP) || (e.getKeyCode()== KeyEvent.VK_SPACE))  {
-			dino.jump();
-		}
+//		if((e.getKeyCode()== KeyEvent.VK_UP) || (e.getKeyCode()== KeyEvent.VK_SPACE))  {
+//			dino.jump();
+//		}
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("anywhere else id be a ten");
-		
+		switch(e.getKeyCode()) {
+			case KeyEvent.VK_SPACE:
+				if (gameMode == GAME_START_MODE) {
+					gameMode = GAME_PLAY_MODE;
+				} else if (gameMode == GAME_PLAY_MODE) {
+					dino.jump();
+				} else if (gameMode == GAME_END_MODE) {
+					resetGame();
+					gameMode = GAME_PLAY_MODE;
+				}
+				break;
+		}
 	}
 
 }
