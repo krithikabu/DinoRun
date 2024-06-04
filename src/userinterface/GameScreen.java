@@ -133,7 +133,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 				land.draw(g);
 				dino.draw(g);
 				oc.draw(g);
-				g.drawImage(dead,  100,  50,  null);
+				g.drawImage(dead,  200,  50,  null);
 				break;
 		}
 //		clouds.draw(g);
