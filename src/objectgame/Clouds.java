@@ -9,63 +9,53 @@ import util.Sprite;
 
 public class Clouds {
 
-	private BufferedImage cloudImage;
-	private List<Cloud> clouds;
+    private BufferedImage cloudImage;
+    private List<Float> cloudPosX;
+    private List<Float> cloudPosY;
 
-	public Clouds () {
-		cloudImage = Sprite.getSpriteImage("data/cloud.PNG");
-		clouds = new ArrayList<Cloud>();
-		
-		Cloud cloud1 = new Cloud();
-		cloud1.posX = 100;
-		cloud1.posY = 50;
-		clouds.add(cloud1);
-		
-		cloud1 = new Cloud();
-		cloud1.posX = 200;
-		cloud1.posY = 30;
-		clouds.add(cloud1);
-		
-		cloud1 = new Cloud();
-		cloud1.posX = 300;
-		cloud1.posY = 60;
-		clouds.add(cloud1);
-		
-		cloud1 = new Cloud();
-		cloud1.posX = 450;
-		cloud1.posY = 50;
-		clouds.add(cloud1);
-		
-		cloud1 = new Cloud();
-		cloud1.posX = 600;
-		cloud1.posY = 60;
-		clouds.add(cloud1);
-	}
+    public Clouds() {
+        cloudImage = Sprite.getSpriteImage("data/cloud.PNG");
+        cloudPosX = new ArrayList<>();
+        cloudPosY = new ArrayList<>();
 
-	public void move() {
-		for(Cloud cloud: clouds) {
-		cloud.posX --;
-		}
+        // Initial cloud positions
+        cloudPosX.add(100f);
+        cloudPosY.add(50f);
 
-		Cloud firstCloud = clouds.get(0);
-		if (firstCloud.posX + cloudImage.getWidth() < 0) {
-			firstCloud.posX = 600;
-			clouds.remove(firstCloud);
-			clouds.add(firstCloud);
-		
-		}
-	}
+        cloudPosX.add(200f);
+        cloudPosY.add(30f);
 
-	public void draw(Graphics g) {
-		for (Cloud cloud : clouds) {
-			g.drawImage(cloudImage ,(int) cloud.posX, (int) cloud.posY, null);
-		}
-	
-	}
+        cloudPosX.add(300f);
+        cloudPosY.add(60f);
 
-	private class Cloud {
-		float posX;
-		float posY;
-	}
+        cloudPosX.add(450f);
+        cloudPosY.add(50f);
 
+        cloudPosX.add(600f);
+        cloudPosY.add(60f);
+    }
+
+    public void move() {
+        // Move each cloud to the left
+        for (int i = 0; i < cloudPosX.size(); i++) {
+            cloudPosX.set(i, cloudPosX.get(i) - 1);
+        }
+
+        // Check if the first cloud is out of the screen
+        if (cloudPosX.get(0) + cloudImage.getWidth() < 0) {
+            // Move the first cloud to the end of the list
+            float firstCloudY = cloudPosY.remove(0);
+            cloudPosY.add(firstCloudY);
+
+            float firstCloudX = cloudPosX.remove(0);
+            cloudPosX.add(600f);
+        }
+    }
+
+    public void draw(Graphics g) {
+        // Draw each cloud at its position
+        for (int i = 0; i < cloudPosX.size(); i++) {
+            g.drawImage(cloudImage, cloudPosX.get(i).intValue(), cloudPosY.get(i).intValue(), null);
+        }
+    }
 }
