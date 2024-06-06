@@ -24,7 +24,9 @@ public class MainCharacter {
     private float speedY = 0;
     // Animation for the running dino
     private Animation dinoRun;
-    private Rectangle rect;
+    private Rectangle rectHead;
+    private Rectangle rectBody;
+    private Rectangle rectLegs;
     private boolean isAlive = true;
 
     public MainCharacter() {
@@ -33,7 +35,9 @@ public class MainCharacter {
         // Add frames to the animation
         dinoRun.addFrame(Sprite.getSpriteImage("data/main-character1.png"));
         dinoRun.addFrame(Sprite.getSpriteImage("data/main-character2.png"));
-        rect = new Rectangle();
+        rectHead = new Rectangle();
+        rectBody = new Rectangle();
+        rectLegs = new Rectangle();
     }
 
     // Getter for speedY
@@ -67,10 +71,12 @@ public class MainCharacter {
         this.x = x;
     }
     
+    // setter for isAlive
     public void setAlive(Boolean alive) {
     	isAlive = alive;
     }
     
+    // getter for isAlive
     public boolean getAlive() {
     	return isAlive;
     }
@@ -87,14 +93,24 @@ public class MainCharacter {
             speedY += GameScreen.GRAVITY;
             y += speedY;
         }
-        rect.x = (int) x;
-        rect.y = (int) y;
-        rect.width = dinoRun.getFrame().getWidth();
-        rect.height = dinoRun.getFrame().getHeight();
+        rectHead.x = (int) x + (dinoRun.getFrame().getWidth() / 2);
+        rectHead.y = (int) y;
+        rectHead.width = dinoRun.getFrame().getWidth() / 2;
+        rectHead.height = dinoRun.getFrame().getHeight() / 3;
+        
+        rectBody.x = (int) x;
+        rectBody.y = (int) y + (dinoRun.getFrame().getHeight() / 3);
+        rectBody.width = dinoRun.getFrame().getWidth();
+        rectBody.height = dinoRun.getFrame().getHeight() / 3;
+        
+        rectLegs.x = (int) x + (dinoRun.getFrame().getWidth() / 3);
+        rectLegs.y = (int) y + (dinoRun.getFrame().getHeight() / 3);
+        rectLegs.width = dinoRun.getFrame().getWidth() / 3;
+        rectLegs.height = dinoRun.getFrame().getHeight() / 3;
     }
     
     public Rectangle getBounds() {
-    	return rect;
+    	return rectHead;
     }
 
     // Make the character jump
@@ -108,7 +124,7 @@ public class MainCharacter {
         try {
             // Draw the current frame of the animation
         	g.setColor(Color.PINK);
-//    		g.drawRect((int) x, (int) y, 39, 43);
+    		g.drawRect(rectHead.x, rectHead.y, rectHead.width, rectHead.height);
             g.drawImage(dinoRun.getFrame(), (int)x, (int)y, null);
         } catch (Exception e) {
             // Print any exceptions that occur

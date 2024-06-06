@@ -12,6 +12,7 @@ public class Clouds {
     private BufferedImage cloudImage;
     private List<Integer> cloudPosX;
     private List<Integer> cloudPosY;
+    public static int cloudVelocity = 1;
 
     public Clouds() {
         cloudImage = Sprite.getSpriteImage("data/cloud.PNG");
@@ -38,7 +39,7 @@ public class Clouds {
     public void move() {
         // Move each cloud to the left
         for (int i = 0; i < cloudPosX.size(); i++) {
-            cloudPosX.set(i, cloudPosX.get(i) - 1);
+            cloudPosX.set(i, cloudPosX.get(i) - cloudVelocity);
         }
 
         // Check if the first cloud is out of the screen

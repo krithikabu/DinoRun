@@ -17,6 +17,7 @@ public class Land {
     private BufferedImage imageLand1;
     private BufferedImage imageLand2;
     private BufferedImage imageLand3;
+    public static int landVelocity = 3;
     private Random random;
 
     public Land(GameScreen game) {
@@ -38,7 +39,7 @@ public class Land {
 
     public void move() {
         for (int i = 0; i < listPosX.size(); i++) {
-            listPosX.set(i, listPosX.get(i) - 3); // Move each land tile to the left
+            listPosX.set(i, listPosX.get(i) - landVelocity); // Move each land tile to the left
         }
 
         if (listPosX.get(0) + imageLand1.getWidth() < 0) {

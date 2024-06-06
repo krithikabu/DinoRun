@@ -36,6 +36,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 //	private Cactus cactus;
 	private ObstaclesController oc;
 	private int score;
+	private int HIscore = 0;
 	
 	private int gameMode = GAME_START_MODE;
 	public static final int GAME_START_MODE = 0;
@@ -105,6 +106,9 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	
 	public void increaseScore(int score) {
 		this.score += score;
+		if (this.score >= HIscore) {
+			HIscore = this.score;
+		}
 	}
 	
 	@Override
@@ -126,7 +130,8 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 				land.draw(g);
 				dino.draw(g);
 				oc.draw(g);
-				g.drawString("HI " + String.valueOf(score), 500, 20);
+				g.drawString("HI " + String.valueOf(HIscore), 450, 20);
+				g.drawString(String.valueOf(score), 500, 20);
 				break;
 			case GAME_END_MODE:
 				clouds.draw(g);
@@ -149,6 +154,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 		dino.setX(50);
 		dino.setY(62);
 		oc.resetGame();
+		score = 0;
 	}
 	
 	@Override
@@ -170,8 +176,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("anywhere else id be a ten");
-		switch(e.getKeyCode()) {
-			case KeyEvent.VK_SPACE:
+		if (KeyEvent.VK_SPACE  == e.getKeyCode()|| KeyEvent.VK_UP == e.getKeyCode()){
 				if (gameMode == GAME_START_MODE) {
 					gameMode = GAME_PLAY_MODE;
 				} else if (gameMode == GAME_PLAY_MODE) {
@@ -179,8 +184,21 @@ public class GameScreen extends JPanel implements Runnable, KeyListener{
 				} else if (gameMode == GAME_END_MODE) {
 					resetGame();
 					gameMode = GAME_PLAY_MODE;
-				}
-				break;
+				}	
+		} 
+		if (KeyEvent.VK_RIGHT == e.getKeyCode()){
+			if (gameMode == GAME_PLAY_MODE) {
+				Land.landVelocity++;
+				Clouds.cloudVelocity++;
+				Cactus.cactusVelocity++;
+			}
+		}
+		if (KeyEvent.VK_LEFT == e.getKeyCode()){
+			if (gameMode == GAME_PLAY_MODE) {
+				Land.landVelocity--;
+				Clouds.cloudVelocity--;
+				Cactus.cactusVelocity--;
+			}
 		}
 	}
 

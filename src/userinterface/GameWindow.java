@@ -5,8 +5,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.awt.Image;
+import java.awt.event.InputEvent;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 public class GameWindow extends JFrame {
 	
@@ -17,6 +22,7 @@ public class GameWindow extends JFrame {
 	public GameWindow() {
 		super("Java T-Rex game");
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		setResizable(false);
 		setLocation(400,200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameScreen = new GameScreen();

@@ -15,6 +15,7 @@ public class Cactus extends Obstacle {
 	private Rectangle rect;
 	private MainCharacter dino;
 	private boolean isScoreGot = false;
+	public static int cactusVelocity = 3;
 
 	public Cactus(MainCharacter dino) {
 		this.dino = dino;
@@ -26,7 +27,7 @@ public class Cactus extends Obstacle {
 	
 	@Override
 	public void move() {
-		posX -= 3;
+		posX -= cactusVelocity;
 		rect.x = posX;
 		rect.y = posY;
 		rect.width = image.getWidth();
