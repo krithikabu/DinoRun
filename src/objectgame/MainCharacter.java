@@ -93,39 +93,57 @@ public class MainCharacter {
             speedY += GameScreen.GRAVITY;
             y += speedY;
         }
-        rectHead.x = (int) x + (dinoRun.getFrame().getWidth() / 2);
-        rectHead.y = (int) y;
-        rectHead.width = dinoRun.getFrame().getWidth() / 2;
-        rectHead.height = dinoRun.getFrame().getHeight() / 3;
+//        rectHead.x = (int) x + (dinoRun.getFrame().getWidth() / 2);
+//        rectHead.y = (int) y;
+//        rectHead.width = dinoRun.getFrame().getWidth() / 2;
+//        rectHead.height = dinoRun.getFrame().getHeight() / 3;
+//        
+//        rectBody.x = (int) x;
+//        rectBody.y = (int) y + (dinoRun.getFrame().getHeight() / 3);
+//        rectBody.width = dinoRun.getFrame().getWidth();
+//        rectBody.height = dinoRun.getFrame().getHeight() / 3;
+//        
+//        rectLegs.x = (int) x + (dinoRun.getFrame().getWidth() / 3);
+//        rectLegs.y = (int) y + (dinoRun.getFrame().getHeight() / 3);
+//        rectLegs.width = dinoRun.getFrame().getWidth() / 3;
+//        rectLegs.height = dinoRun.getFrame().getHeight() / 3;
+        rectHead.setBounds((int)x + dinoRun.getFrame().getHeight() / 4, (int)y, dinoRun.getFrame().getWidth() / 2, dinoRun.getFrame().getHeight() / 3);
+        rectBody.setBounds((int)x, (int)y + dinoRun.getFrame().getHeight() / 3, dinoRun.getFrame().getWidth(), dinoRun.getFrame().getHeight() / 3);
         
-        rectBody.x = (int) x;
-        rectBody.y = (int) y + (dinoRun.getFrame().getHeight() / 3);
-        rectBody.width = dinoRun.getFrame().getWidth();
-        rectBody.height = dinoRun.getFrame().getHeight() / 3;
-        
-        rectLegs.x = (int) x + (dinoRun.getFrame().getWidth() / 3);
-        rectLegs.y = (int) y + (dinoRun.getFrame().getHeight() / 3);
-        rectLegs.width = dinoRun.getFrame().getWidth() / 3;
-        rectLegs.height = dinoRun.getFrame().getHeight() / 3;
+        //rectLegs.setBounds((int)x, (int)y + 2 * dinoRun.getFrame().getHeight() / 3, dinoRun.getFrame().getWidth(), dinoRun.getFrame().getHeight() / 3);
+        int legSquareSize = dinoRun.getFrame().getHeight() / 3;
+        rectLegs.setBounds((int)x + (dinoRun.getFrame().getWidth() - legSquareSize) / 2 - 5, (int)y + 2 * dinoRun.getFrame().getHeight() / 3, legSquareSize, legSquareSize);
+    
     }
     
-    public Rectangle getBounds() {
-    	return rectHead;
+    public Rectangle[] getBounds() {
+        return new Rectangle[] { rectHead, rectBody, rectLegs };
     }
 
-    // Make the character jump
+//    // Make the character jump
+//    public void jump() {
+//        speedY = -6;
+//        y += speedY;
+//    }
+    
     public void jump() {
-        speedY = -6;
-        y += speedY;
+        if (y == GameScreen.GROUND - dinoRun.getFrame().getHeight()) {
+            speedY = -6;
+            y += speedY;
+        }
     }
 
     // Draw the character on the screen
     public void draw(Graphics g) {
         try {
             // Draw the current frame of the animation
-        	g.setColor(Color.PINK);
-    		g.drawRect(rectHead.x, rectHead.y, rectHead.width, rectHead.height);
-            g.drawImage(dinoRun.getFrame(), (int)x, (int)y, null);
+        	g.drawImage(dinoRun.getFrame(), (int)x, (int)y, null);
+            g.setColor(Color.PINK);
+            g.drawRect(rectHead.x + 10, rectHead.y, rectHead.width, rectHead.height);
+            g.drawRect(rectBody.x, rectBody.y, rectLegs.width * 2 + 5, rectBody.height);
+            //g.setColor(Color.GREEN);
+            g.drawRect(rectLegs.x, rectLegs.y, rectLegs.width, rectLegs.height);
+            
         } catch (Exception e) {
             // Print any exceptions that occur
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package objectgame;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,23 +30,33 @@ public class ObstaclesController {
 	}
 	
 	public void move() {
-		for(Obstacle o : obstacles) {
-			o.move();
-			if (o.isOver() && !o.isScoreGot()) {
-				gs.increaseScore(20);
-				o.setIsScoreGot(true);
-			}
-			if (o.getBounds().intersects(dino.getBounds())) {
-				dino.setAlive(false);
-			}
-		}
-		
-		Obstacle firstCactus = obstacles.get(0);
-		if (firstCactus.isOffScreen()) {
-			obstacles.remove(firstCactus);
-			obstacles.add(getRandomCactus());
-		}
-	}
+        for (Obstacle o : obstacles) {
+            o.move();
+            if (o.isOver() && !o.isScoreGot()) {
+                gs.increaseScore(20);
+                o.setIsScoreGot(true);
+            }
+            if (checkCollision(o)) {
+                dino.setAlive(false);
+            }
+        }
+
+        Obstacle firstCactus = obstacles.get(0);
+        if (firstCactus.isOffScreen()) {
+            obstacles.remove(firstCactus);
+            obstacles.add(getRandomCactus());
+        }
+    }
+	
+	private boolean checkCollision(Obstacle o) {
+        Rectangle[] dinoBounds = dino.getBounds();
+        for (Rectangle dinoRect : dinoBounds) {
+            if (dinoRect.intersects(o.getBounds())) {
+                return true;
+            }
+        }
+        return false;
+    }
 	
 	public void draw(Graphics g) {
 		for (Obstacle o: obstacles) {
