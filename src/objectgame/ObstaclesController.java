@@ -33,7 +33,7 @@ public class ObstaclesController {
         for (Obstacle o : obstacles) {
             o.move();
             if (o.isOver() && !o.isScoreGot()) {
-                gs.increaseScore(20);
+                gs.increaseScore(14 + (2*Land.landVelocity));
                 o.setIsScoreGot(true);
             }
             if (checkCollision(o)) {
